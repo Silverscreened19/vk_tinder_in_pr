@@ -1,0 +1,36 @@
+{
+    "error": {
+        "error_code": 6,
+        "error_msg": "Too many requests per second",
+        "request_params": [
+            {
+                "key": "v",
+                "value": "5.131"
+            },
+            {
+                "key": "owner_id",
+                "value": "252950036"
+            },
+            {
+                "key": "extended",
+                "value": "1"
+            },
+            {
+                "key": "photo_sizes",
+                "value": "1"
+            },
+            {
+                "key": "album_id",
+                "value": "profile"
+            },
+            {
+                "key": "method",
+                "value": "photos.get"
+            },
+            {
+                "key": "oauth",
+                "value": "1"
+            }
+        ]
+    }
+}
