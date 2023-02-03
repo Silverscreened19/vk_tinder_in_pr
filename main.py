@@ -14,6 +14,8 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 class User:
 
     def __init__(self):
+        # self.token = 'vk1.a.EX2R_0DLBhX4RKDq_RfJ1R0iJumj9P3UsWJBalAPrAEgOOZyIFDirGA_zS-984BXDeBXqxOSVj-JRndJw-9C0wgwQ4ybVaFNygIZJUxwEqGPeixpSLzTs167RVWJFt-cKuPdYXOrGWzjwNJoGS-jEno41Ron5jgNTfTSD124lcQmm5QONNau2WBenOkfB6WUJwQuS73L9dwnlPk1XfRJPQ'
+
         # self.token = 'vk1.a.WizWG1P2L55Y71Pw1_Nyee2FPnT6NW-RAPrXfu_8a9sq3G7n1PUepVbE5fhFCo-qjOgivGE8mwbVL2FOoTIDIyNLGvV2aK069lEdAyQvZ7UYxH-TVyYMSVIiyHBJfwgZynXMR_J27nTLDzeWLncwHH9WQELOz-0gG3_JGy9pEzeaDGAShmkRkj9lWwrZ6tjpn38O7nUvwfai6_aYmp4FzQ'
         self.token = 'vk1.a.H1O2MeQhqORWS_wXxjnarAEJEnwbbte2M6-dD9up-0tjdAKzGgnESWbgUb-OXm-SufX2uMlqhY9yjG7iIRtIi_J1sA_xJY0dpfMmIKvo3BF2hyg2eKCfDuoA4k5QvFhFtQDXCv5XKustiWYWpKzeFK00fIKJYGWlBRuXQPPe938V3ZVgLodatSCWnJPORofvo3OYGDxKEOcy6kwa7lKohQ'
         self.vk = vk_api.VkApi(token=self.token)
@@ -60,8 +62,19 @@ class User:
         url = 'https://api.vk.com/method/users.get'
         params = {'access_token': self.token,
                   'user_ids': user_id,
-                  'fields': 'bdate, sex, city',
-                  'v': '5.131'}
+                'fields': 'bdate, sex, city',
+                'v': '5.131'}
+        reply = requests.get(url, params=params).json()
+        return reply
+
+
+    def user_info_c(self):
+        '''вспомогательная функция, если не понадобится, удалить в финальном варианте'''
+        url = 'https://api.vk.com/method/users.search'
+        params = {'access_token': self.token,
+                'city_id': 859,
+                'fields': 'bdate, sex, city',
+                'v': '5.131'}
         reply = requests.get(url, params=params).json()
         return reply
 
@@ -116,6 +129,8 @@ class User:
 class VK_b:
 
     def __init__(self, version='5.131'):
+        # self.token = 'vk1.a.H1O2MeQhqORWS_wXxjnarAEJEnwbbte2M6-dD9up-0tjdAKzGgnESWbgUb-OXm-SufX2uMlqhY9yjG7iIRtIi_J1sA_xJY0dpfMmIKvo3BF2hyg2eKCfDuoA4k5QvFhFtQDXCv5XKustiWYWpKzeFK00fIKJYGWlBRuXQPPe938V3ZVgLodatSCWnJPORofvo3OYGDxKEOcy6kwa7lKohQ'
+
         self.token = 'vk1.a.WizWG1P2L55Y71Pw1_Nyee2FPnT6NW-RAPrXfu_8a9sq3G7n1PUepVbE5fhFCo-qjOgivGE8mwbVL2FOoTIDIyNLGvV2aK069lEdAyQvZ7UYxH-TVyYMSVIiyHBJfwgZynXMR_J27nTLDzeWLncwHH9WQELOz-0gG3_JGy9pEzeaDGAShmkRkj9lWwrZ6tjpn38O7nUvwfai6_aYmp4FzQ'
         self.version = version
         self.params_2 = {'access_token': self.token, 'v': self.version}
@@ -130,9 +145,10 @@ class VK_b:
         city_title = user.user_city_title(user_id)
         age = user.user_age(user_id)
         json_data = []
-        params = {'sex': sex, 'city': city,'fields': 'sex, city, bdate', 'age_from': age, 'age_to': age, 'status': [1, 6], 'is_closed': False,'count': 10}
+        params = {'sex': sex, 'city': city,'fields': 'sex, city, bdate', 'age_from': age, 'age_to': age, 'count': 10}
         res = requests.get(url, params={**self.params_2, **params}).json()
         # pprint(res)
+        # 'status': [1, 6], 'is_closed': False,
         for item in res['response']['items']:
             if 'city' in item and city_title in item['city']['title'] and 'bdate' in item and len(item['bdate'].split('.'))==3 and item['is_closed'] == False:
                 f_name = item['first_name']
@@ -166,6 +182,7 @@ class VK_b:
                 'photo_sizes': '1'
             }
             res = requests.get(url, params={**self.params_2, **params}).json()
+            # pprint(res)
             time.sleep(2)
             all_photo = res['response']['items']
             height = 0
@@ -206,13 +223,15 @@ user = User()
 vk_b = VK_b()
 
 # if __name__ == '__main__':
+
+
 #     user = User()
 #     vk_b = VK_b()
     # vk_b = VK_b('2', 'Санкт-Петербург', 23)
-    # pprint(vk_b.make_list_id_2(2373876))
-
+    # pprint(vk_b.make_list_id_2(8079094))
+    # pprint(vk_b.photo_profile(8079094))
     # vk_b.json_info(1199790)
-    # user.user_info(1199790)
+    # pprint(user.user_info_c())
 
     # for item in set:
     #     # print(item[0][1])
@@ -220,8 +239,8 @@ vk_b = VK_b()
     #     pprint()
     # pprint(user.user_age(1199790))
     # pprint(user.user_city(2373876))
-
-#     vk_b.make_list_id_2()
+    # vk_b.make_list_id_2(8079094)
+    # pprint(user.user_info(859))
 
 #     vk_b = VK_b(user.user_sex(2373876), user.user_city(), user.user_age())  # вводим исходные данные пользователя
 #     # vk_t.json_info()

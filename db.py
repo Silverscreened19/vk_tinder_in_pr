@@ -123,6 +123,7 @@ def insert_users(user_id):
             f_name = item['first_name']
             l_name = item['last_name']
             u_name = f'{f_name} {l_name}'
+            # print(u_name)
             age = user.user_age(user_id)
             sex = item['sex']
             city = item['city']['title']
@@ -151,8 +152,8 @@ def insert_photos(user_id):
                 cursor.execute(f"""INSERT INTO photos (id_matched, photo_1, photo_2, photo_3)
                             VALUES ('{item[0][2]}', '{item[0][1]}', '{item[1][1]}', '{item[2][1]}');"""
                                     )
-            else:
-                print('неверная длина списка photo_profile()')
+            # else:
+            #     print('неверная длина списка photo_profile()')
     print('Данные о фотографиях внесены')
 
 def show_users():
@@ -175,17 +176,18 @@ def show_photos():
         pprint(cursor.fetchall())
 
 
-# drop_users()
-# drop_matched_users()
-# drop_favorite_users()
-# drop_photos()
-# create_table_user()
-# create_table_matched_users()
-# create_table_favorite_users()
-# create_table_photos()
-# insert_users(2373876)
-# insert_matched_users(2373876)
-# insert_photos(2373876)
-# show_users()
+drop_users()
+drop_matched_users()
+drop_favorite_users()
+drop_photos()
+create_table_user()
+create_table_matched_users()
+create_table_favorite_users()
+create_table_photos()
+insert_users(8079094)
+show_users()
+insert_matched_users(8079094)
+insert_photos(8079094)
+
 # show_matched_users()
 # show_photos()
